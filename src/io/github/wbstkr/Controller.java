@@ -61,6 +61,7 @@ public class Controller {
     /**
      * Updates the {@link Controller}.
      * Please put this in the draw method.
+     *
      * @example <pre> {@code
      * public void draw() {
      *     background(0);

@@ -79,7 +79,7 @@ public class Controller {
      */
     public void update() {
         for (Object button : this.pressed.keySet().toArray()) {
-            if (this.pressed.get(button))
+            if (Boolean.TRUE.equals(this.pressed.get(button)))
                 this.held.put(button, this.get(button) + 1);
             else
                 this.held.put(button, 0);

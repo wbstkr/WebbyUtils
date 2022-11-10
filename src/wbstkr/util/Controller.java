@@ -1,17 +1,18 @@
-package io.github.wbstkr;
+package wbstkr.util;
 
 import java.util.HashMap;
 
 /**
- * This is a {@link Controller} class. It stores keystrokes into a {@link HashMap}.
+ * This is the Controller class. It stores keystrokes into a {@link HashMap}.
  */
 
 public class Controller {
-    public final static String VERSION = "0.0.0";
+    public static final String VERSION = "0.0.0";
 
     /**
      * Stores keystrokes as keys and booleans as values.
-     * True means the keystroke is pressed and false means the keystroke is not pressed.
+     * True means the keystroke is pressed and false means the keystroke is not
+     * pressed.
      */
     public HashMap<Object, Boolean> pressed;
     /**
@@ -21,7 +22,8 @@ public class Controller {
     public HashMap<Object, Integer> held;
 
     /**
-     * Constructor for {@link Controller}. Initializes {@link #pressed} and {@link #held}.
+     * Constructor for {@link Controller}. Initializes {@link #pressed} and
+     * {@link #held}.
      */
     public Controller() {
         this.pressed = new HashMap<>();
@@ -33,11 +35,14 @@ public class Controller {
      * Please put this in the keyPressed() method.
      *
      * @param button the keystroke, either key or keyCode
-     * @example <pre> {@code
+     * @example
+     * 
+     *          <pre> {@code
      * public void keyPressed() {
      *     if (key == CODED) input.press(keyCode);
      *     else input.press(key);
-     * }} </pre>
+     *          }
+     * } </pre>
      */
     public void press(Object button) {
         this.pressed.put(button, true);
@@ -48,11 +53,14 @@ public class Controller {
      * Please put this in the keyPressed method.
      *
      * @param button the keystroke, either key or keyCode
-     * @example <pre> {@code
+     * @example
+     * 
+     *          <pre> {@code
      * public void keyReleased() {
      *     if (key == CODED) input.release(keyCode);
      *     else input.release(key);
-     * }} </pre>
+     *          }
+     * } </pre>
      */
     public void release(Object button) {
         this.pressed.put(button, false);
@@ -62,21 +70,27 @@ public class Controller {
      * Updates the {@link Controller}.
      * Please put this in the draw method.
      *
-     * @example <pre> {@code
+     * @example
+     * 
+     *          <pre> {@code
      * public void draw() {
      *     background(0);
      *     input.update();
-     * }}</pre>
+     *          }
+     * } </pre>
      */
     public void update() {
         for (Object button : this.pressed.keySet().toArray()) {
-            if (this.pressed.get(button)) this.held.put(button, this.get(button) + 1);
-            else this.held.put(button, 0);
+            if (this.pressed.get(button))
+                this.held.put(button, this.get(button) + 1);
+            else
+                this.held.put(button, 0);
         }
     }
 
     /**
-     * Returns the number of frames the requested keystroke has been pressed for as an integer.
+     * Returns the number of frames the requested keystroke has been pressed for as
+     * an integer.
      *
      * @param button the keystroke, either key or keyCode
      * @return number of frames as an integer.
@@ -86,9 +100,11 @@ public class Controller {
     }
 
     /**
-     * Returns a string representation of the list of keystrokes and how long they have been pressed.
+     * Returns a string representation of the list of keystrokes and how long they
+     * have been pressed.
      *
-     * @return a string representation of the list of keystrokes and how long they have been pressed.
+     * @return a string representation of the list of keystrokes and how long they
+     *         have been pressed.
      */
     @Override
     public String toString() {

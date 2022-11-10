@@ -1,4 +1,4 @@
-import io.github.wbstkr.*
+import wbstkr.util.*;
 
 Controller input;
 

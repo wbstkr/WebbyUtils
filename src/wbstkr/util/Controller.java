@@ -7,19 +7,17 @@ import java.util.HashMap;
  */
 
 public class Controller {
-    public static final String VERSION = "0.0.0";
-
     /**
      * Stores keystrokes as keys and booleans as values.
      * True means the keystroke is pressed and false means the keystroke is not
      * pressed.
      */
-    public HashMap<Object, Boolean> pressed;
+    private HashMap<Object, Boolean> pressed;
     /**
      * Stores keystrokes as keys and integers as values.
      * The value represents how many frames the key has been held.
      */
-    public HashMap<Object, Integer> held;
+    private HashMap<Object, Integer> held;
 
     /**
      * Constructor for {@link Controller}. Initializes {@link #pressed} and

@@ -19,10 +19,6 @@ public class Controller {
      */
     private HashMap<Object, Integer> held;
 
-    /**
-     * Constructor for {@link Controller}. Initializes {@link #pressed} and
-     * {@link #held}.
-     */
     public Controller() {
         this.pressed = new HashMap<>();
         this.held = new HashMap<>();

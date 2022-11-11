@@ -7,8 +7,10 @@ public class SpriteSheet {
     private PApplet parent;
     private final PImage content;
     public final Sprite sprite;
+    /** Number of sprites in the SpriteSheet. */
     public final int size;
 
+    /** Helper class to store the width and height of each sprite. */
     private class Sprite {
         public final int width;
         public final int height;
@@ -26,6 +28,15 @@ public class SpriteSheet {
         this.size = (this.content.width / this.sprite.width) * (this.content.height / this.sprite.height);
     }
 
+    /**
+     * Draws the selected sprite from {@link #content}.
+     * 
+     * @param index  index of sprite
+     * @param x      x position of image
+     * @param y      y position of image
+     * @param scaleX x scale of image
+     * @param scaleY y scale of image
+     */
     public void drawSprite(int index, float x, float y, float scaleX, float scaleY) {
         if (index < this.size) {
             int spriteX = (index % (this.content.width / this.sprite.width)) * this.sprite.width;
@@ -37,10 +48,25 @@ public class SpriteSheet {
         }
     }
 
+    /**
+     * Draws the selected sprite from {@link #content}.
+     * 
+     * @param index index of sprite
+     * @param x     x position of image
+     * @param y     y position of image
+     * @param scale scale of image
+     */
     public void drawSprite(int index, float x, float y, float scale) {
         this.drawSprite(index, x, y, scale, scale);
     }
 
+    /**
+     * Draws the selected sprite from {@link #content}. The scale is set to 1.
+     * 
+     * @param index index of sprite
+     * @param x     x position of image
+     * @param y     y position of image
+     */
     public void drawSprite(int index, float x, float y) {
         this.drawSprite(index, x, y, 1, 1);
     }

@@ -48,6 +48,9 @@ public class SpriteSheet {
         }
     }
 
+    // TODO: fix sprite not flipping with negative numbers
+    // TODO: fix example file to correspond to this fix
+
     /**
      * Draws the selected sprite from {@link #content}.
      * 

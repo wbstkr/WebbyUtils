@@ -26,17 +26,18 @@ public class Controller {
 
     /**
      * Sets the value of the keystroke on {@link #pressed} to true.
-     * Please put this in the keyPressed() method.
-     *
-     * @param button the keystroke, either key or keyCode
-     * @example
+     * Please put this in the keyPressed() method:
      * 
-     *          <pre> {@code
+     * <pre>
      * public void keyPressed() {
-     *     if (key == CODED) input.press(keyCode);
-     *     else input.press(key);
-     *          }
-     * } </pre>
+     *     if (key == CODED)
+     *         input.press(keyCode);
+     *     else
+     *         input.press(key);
+     * }
+     * </pre>
+     * 
+     * @param button the keystroke, either key or keyCode
      */
     public void press(Object button) {
         this.pressed.put(button, true);
@@ -44,17 +45,18 @@ public class Controller {
 
     /**
      * Sets value of the keystroke on {@link #pressed} to false.
-     * Please put this in the keyPressed method.
-     *
-     * @param button the keystroke, either key or keyCode
-     * @example
+     * Please put this in the keyPressed method:
      * 
-     *          <pre> {@code
+     * <pre>
      * public void keyReleased() {
-     *     if (key == CODED) input.release(keyCode);
-     *     else input.release(key);
-     *          }
-     * } </pre>
+     *     if (key == CODED)
+     *         input.release(keyCode);
+     *     else
+     *         input.release(key);
+     * }
+     * </pre>
+     * 
+     * @param button the keystroke, either key or keyCode
      */
     public void release(Object button) {
         this.pressed.put(button, false);
@@ -62,16 +64,14 @@ public class Controller {
 
     /**
      * Updates the {@link Controller}.
-     * Please put this in the draw method.
-     *
-     * @example
+     * Please put this in the draw method:
      * 
-     *          <pre> {@code
+     * <pre>
      * public void draw() {
      *     background(0);
      *     input.update();
-     *          }
-     * } </pre>
+     * }
+     * </pre>
      */
     public void update() {
         for (Object button : this.pressed.keySet().toArray()) {

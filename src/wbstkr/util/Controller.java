@@ -2,26 +2,30 @@ package wbstkr.util;
 
 import java.util.HashMap;
 
+import processing.core.PApplet;
+import processing.core.PVector;
+
 /**
  * This is the Controller class. It stores keystrokes into a {@link HashMap}.
  */
 
 public class Controller {
-    /**
-     * Stores keystrokes as keys and booleans as values.
-     * True means the keystroke is pressed and false means the keystroke is not
-     * pressed.
-     */
-    private HashMap<Object, Boolean> pressed;
-    /**
-     * Stores keystrokes as keys and integers as values.
-     * The value represents how many frames the key has been held.
-     */
-    private HashMap<Object, Integer> held;
+    private PApplet parent;
+    private HashMap<Object, Boolean> pressed; // list of keys pressed on this frame
+    private HashMap<Object, Integer> held; // list of how many frames keys are being held
+    private PVector mouse;
+    private PVector rmouse;
 
-    public Controller() {
+    private static class Mouse {
+        private static Mouse right;
+    }
+
+    public Controller(PApplet parent) {
+        this.parent = parent;
         this.pressed = new HashMap<>();
         this.held = new HashMap<>();
+        this.mouse = new PVector(0, 0);
+        this.rmouse = new PVector(0, 0);
     }
 
     /**
@@ -80,6 +84,8 @@ public class Controller {
             else
                 this.held.put(button, 0);
         }
+        this.mouse.set(this.parent.mouseX, this.parent.mouseY);
+        this.rmouse.set(this.parent.rmouseX, this.parent.rmouseY);
     }
 
     /**

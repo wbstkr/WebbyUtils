@@ -11,15 +11,7 @@ public class SpriteSheet {
     public final int size;
 
     /** Helper class to store the width and height of each sprite. */
-    private class Sprite {
-        public final int width;
-        public final int height;
-
-        public Sprite(int width, int height) {
-            this.width = width;
-            this.height = height;
-        }
-    }
+    private record Sprite(int width, int height) {}
 
     public SpriteSheet(PApplet parent, String filename, int width, int height) {
         this.parent = parent;

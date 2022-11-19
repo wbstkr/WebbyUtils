@@ -10,6 +10,7 @@ public void setup() {
 public void draw() {
     background(0);
     input.update();
+    input.
     text(input.toString(), 0, 10);
 }
 

@@ -3,21 +3,60 @@ package wbstkr.util;
 import java.util.HashMap;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PVector;
 
 /**
- * This is the Controller class. It stores keystrokes into a {@link HashMap}.
+ * This class stores keystrokes into a HashMap.
  */
-
 public class Controller {
-    private PApplet parent;
-    private HashMap<Object, Boolean> pressed; // list of keys pressed on this frame
-    private HashMap<Object, Integer> held; // list of how many frames keys are being held
-    private PVector mouse;
-    private PVector rmouse;
+    private final PApplet parent;
+    private final HashMap<Object, Boolean> pressed;
+    private final HashMap<Object, Integer> held;
+    public final PVector mouse;
+    public final PVector rmouse;
+    public final MouseButton right;
+    public final MouseButton left;
+    public final MouseButton middle;
 
-    private static class Mouse {
-        private static Mouse right;
+    private class MouseButton {
+        private PApplet parent;
+        private int button;
+        private boolean pressed;
+        private boolean ppressed;
+        private int held;
+
+        private MouseButton(PApplet parent, int button) {
+            this.parent = parent;
+            this.button = button;
+            this.pressed = false;
+            this.held = 0;
+        }
+
+        public int get() {
+            return this.held;
+        }
+
+        private void update() {
+            this.ppressed = this.pressed;
+            if (this.parent.mouseButton == this.button) {
+                this.pressed = this.parent.mousePressed;
+            }
+            if (this.pressed)
+                this.held++;
+            else
+                this.held = 0;
+        }
+
+        public void run(Runnable clicked, Runnable held, Runnable released) {
+            if (get() == 1) {
+                clicked.run();
+            } else if (get() > 0) {
+                held.run();
+            } else if (this.ppressed && !this.pressed) {
+                released.run();
+            }
+        }
     }
 
     public Controller(PApplet parent) {
@@ -26,86 +65,37 @@ public class Controller {
         this.held = new HashMap<>();
         this.mouse = new PVector(0, 0);
         this.rmouse = new PVector(0, 0);
+        this.right = new MouseButton(this.parent, PConstants.RIGHT);
+        this.left = new MouseButton(this.parent, PConstants.LEFT);
+        this.middle = new MouseButton(this.parent, PConstants.CENTER);
     }
 
-    /**
-     * Sets the value of the keystroke on {@link #pressed} to true.
-     * Please put this in the keyPressed() method:
-     * 
-     * <pre>
-     * public void keyPressed() {
-     *     if (key == CODED)
-     *         input.press(keyCode);
-     *     else
-     *         input.press(key);
-     * }
-     * </pre>
-     * 
-     * @param button the keystroke, either key or keyCode
-     */
     public void press(Object button) {
         this.pressed.put(button, true);
     }
 
-    /**
-     * Sets value of the keystroke on {@link #pressed} to false.
-     * Please put this in the keyPressed method:
-     * 
-     * <pre>
-     * public void keyReleased() {
-     *     if (key == CODED)
-     *         input.release(keyCode);
-     *     else
-     *         input.release(key);
-     * }
-     * </pre>
-     * 
-     * @param button the keystroke, either key or keyCode
-     */
     public void release(Object button) {
         this.pressed.put(button, false);
     }
 
-    /**
-     * Updates the {@link Controller}.
-     * Please put this in the draw method:
-     * 
-     * <pre>
-     * public void draw() {
-     *     background(0);
-     *     input.update();
-     * }
-     * </pre>
-     */
     public void update() {
+        this.mouse.set(this.parent.mouseX, this.parent.mouseY);
+        this.rmouse.set(this.parent.rmouseX, this.parent.rmouseY);
+        this.right.update();
+        this.left.update();
+        this.middle.update();
         for (Object button : this.pressed.keySet().toArray()) {
             if (Boolean.TRUE.equals(this.pressed.get(button)))
                 this.held.put(button, this.get(button) + 1);
             else
                 this.held.put(button, 0);
         }
-        this.mouse.set(this.parent.mouseX, this.parent.mouseY);
-        this.rmouse.set(this.parent.rmouseX, this.parent.rmouseY);
     }
 
-    /**
-     * Returns the number of frames the requested keystroke has been pressed for as
-     * an integer.
-     *
-     * @param button the keystroke, either key or keyCode
-     * @return number of frames as an integer.
-     */
     public int get(Object button) {
         return this.held.getOrDefault(button, 0);
     }
 
-    /**
-     * Returns a string representation of the list of keystrokes and how long they
-     * have been pressed.
-     *
-     * @return a string representation of the list of keystrokes and how long they
-     *         have been pressed.
-     */
     @Override
     public String toString() {
         StringBuilder toString = new StringBuilder();

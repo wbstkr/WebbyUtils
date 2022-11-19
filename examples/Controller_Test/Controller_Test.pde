@@ -10,7 +10,17 @@ public void setup() {
 public void draw() {
     background(0);
     input.update();
-    input.
+    input.left.run(
+        () -> {
+            background(255,0,0);
+        },
+        () -> {
+            background(0,255,0);
+        },
+        () -> {
+            background(0,0,255);
+        }
+        );
     text(input.toString(), 0, 10);
 }
 

@@ -19,7 +19,7 @@ public class Controller {
     public final MouseButton left;
     public final MouseButton middle;
 
-    private class MouseButton {
+    public class MouseButton {
         private PApplet parent;
         private int button;
         private boolean pressed;
@@ -49,7 +49,7 @@ public class Controller {
         }
 
         public void run(Runnable clicked, Runnable held, Runnable released) {
-            if (get() == 1) {
+            if (this.get() == 1) {
                 clicked.run();
             } else if (get() > 0) {
                 held.run();
@@ -84,12 +84,12 @@ public class Controller {
         this.right.update();
         this.left.update();
         this.middle.update();
-        for (Object button : this.pressed.keySet().toArray()) {
-            if (Boolean.TRUE.equals(this.pressed.get(button)))
-                this.held.put(button, this.get(button) + 1);
+        this.pressed.forEach((k, v) -> {
+            if (Boolean.TRUE.equals(v))
+                this.held.put(k, this.get(k) + 1);
             else
-                this.held.put(button, 0);
-        }
+                this.held.put(k, 0);
+        });
     }
 
     public int get(Object button) {
@@ -99,9 +99,8 @@ public class Controller {
     @Override
     public String toString() {
         StringBuilder toString = new StringBuilder();
-        for (Object button : this.pressed.keySet().toArray()) {
-            toString.append(String.format("%s: %d%n", button.toString(), this.get(button)));
-        }
+        toString.append(String.format("%s%n%s%n", this.mouse.toString(), this.rmouse.toString()));
+        this.pressed.forEach((k, v) -> toString.append(String.format("%s: %d%n", k.toString(), this.get(k))));
         return toString.toString();
     }
 }

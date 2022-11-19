@@ -3,25 +3,36 @@ import wbstkr.util.*;
 Controller input;
 
 public void setup() {
-    size(400, 400);
-    input = new Controller();
+    windowResizable(true);
+    windowRatio(400, 400);
+    size(600, 600);
+    input = new Controller(this);
 }
 
 public void draw() {
     background(0);
     input.update();
     input.left.run(
-        () -> {
-            background(255,0,0);
-        },
-        () -> {
-            background(0,255,0);
-        },
-        () -> {
-            background(0,0,255);
-        }
-        );
+        () -> {println("I clicked for one frame!");},
+        () -> {background(0,255,0);},
+        () -> {println("I released for one frame!");}
+    );
+    input.right.run(this::rightClicked, this::rightHeld, this::rightReleased);
+    textLeading(14);
     text(input.toString(), 0, 10);
+}
+
+public void rightClicked() {
+    println("right clicked");
+}
+
+public void rightHeld() {
+    fill(0,255,100);
+    square(rwidth/2, rheight/2, 100);
+}
+
+public void rightReleased() {
+    println("right released");
 }
 
 public void keyPressed() {

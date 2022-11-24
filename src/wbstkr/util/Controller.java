@@ -39,9 +39,8 @@ public class Controller {
 
         private void update() {
             this.ppressed = this.pressed;
-            if (this.parent.mouseButton == this.button) {
+            if (this.parent.mouseButton == this.button)
                 this.pressed = this.parent.mousePressed;
-            }
             if (this.pressed)
                 this.held++;
             else
@@ -49,13 +48,12 @@ public class Controller {
         }
 
         public void run(Runnable clicked, Runnable held, Runnable released) {
-            if (this.get() == 1) {
+            if (this.get() == 1)
                 clicked.run();
-            } else if (get() > 0) {
+            else if (get() > 0)
                 held.run();
-            } else if (this.ppressed && !this.pressed) {
+            else if (this.ppressed && !this.pressed)
                 released.run();
-            }
         }
     }
 
@@ -79,17 +77,17 @@ public class Controller {
     }
 
     public void update() {
-        this.mouse.set(this.parent.mouseX, this.parent.mouseY);
-        this.rmouse.set(this.parent.rmouseX, this.parent.rmouseY);
-        this.right.update();
-        this.left.update();
-        this.middle.update();
         this.pressed.forEach((k, v) -> {
             if (Boolean.TRUE.equals(v))
                 this.held.put(k, this.get(k) + 1);
             else
                 this.held.put(k, 0);
         });
+        this.mouse.set(this.parent.mouseX, this.parent.mouseY);
+        this.rmouse.set(this.parent.rmouseX, this.parent.rmouseY);
+        this.right.update();
+        this.left.update();
+        this.middle.update();
     }
 
     public int get(Object button) {

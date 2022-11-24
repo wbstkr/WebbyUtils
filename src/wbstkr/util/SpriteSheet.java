@@ -23,15 +23,16 @@ public class SpriteSheet {
         return this.size;
     }
 
-    // TODO: fix sprite not flipping with negative numbers
-    // TODO: fix example file to correspond to this fix
-
     public void drawSprite(int index, float x, float y, float scaleX, float scaleY) {
         if (index < this.size) {
             int spriteX = (index % (this.content.width / this.sprite.width)) * this.sprite.width;
             int spriteY = (index / (this.content.width / this.sprite.width)) * this.sprite.height;
-            parent.image(this.content, x, y, this.sprite.width * scaleX, this.sprite.height * scaleY, spriteX, spriteY,
-                    spriteX + this.sprite.width, spriteY + this.sprite.height);
+            this.parent.pushMatrix();
+            this.parent.translate(x, y);
+            this.parent.scale(scaleX, scaleY);
+            this.parent.image(this.content, 0, 0, this.sprite.width, this.sprite.height,
+                    spriteX, spriteY, spriteX + this.sprite.width, spriteY + this.sprite.height);
+            this.parent.popMatrix();
         } else
             PApplet.println("Index is greater than size.");
     }
